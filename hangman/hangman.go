@@ -41,7 +41,9 @@ func (g *Game) MakeAGuess(guess string) {
 	} else {
 		g.State = "BG"
 		g.TurnLeft = g.TurnLeft - 1
+		g.UsedLetters = append(g.UsedLetters, guess)
 		if g.TurnLeft <= 0 {
+			g.State = "L"
 		}
 
 	}
