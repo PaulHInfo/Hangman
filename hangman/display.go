@@ -30,3 +30,170 @@ func DrawWelcom() {
 
 	`)
 }
+
+func Draw(g *Game, guess string) {
+	drawTurns(g.TurnLeft)
+	drawStat(g, guess)
+}
+func drawTurns(l int) {
+	var draw string
+	switch l {
+	case 0:
+		draw =
+			`
+		  _________
+		  |        |
+		  |        0
+		  |		  /|\
+		  |        |
+		  |       /|\
+		  |		
+		__|___
+		|	|______________	
+		|				   |		
+		|				   |
+		|__________________|
+	   `
+	case 1:
+		draw =
+			`
+		  _________
+		  |        |
+		  |        0
+		  |		  /|\
+		  |        |
+		  |       
+		  |		
+		__|___
+		|	|______________	
+		|				   |		
+		|				   |
+		|__________________|
+	   `
+	case 2:
+		draw =
+			`
+		  _________
+		  |        |
+		  |        
+		  |		  
+		  |        
+		  |       
+		  |		
+		__|___
+		|	|______________	
+		|				   |		
+		|				   |
+		|__________________|
+	   `
+	case 3:
+		draw =
+			`
+		  
+		  |        
+		  |       
+		  |		  
+		  |       
+		  |       
+		  |		
+		__|___
+		|	|______________	
+		|				   |		
+		|				   |
+		|__________________|
+	   `
+	case 4:
+		draw =
+			`
+		  
+		        
+		  |       
+		  |		  
+		  |       
+		  |       
+		  |		
+		__|___
+		|	|______________	
+		|				   |		
+		|				   |
+		|__________________|
+	   `
+	case 5:
+		draw =
+			`
+			         
+		  	  
+		  |       
+		  |       
+		  |		
+		__|___
+		|	|______________	
+		|				   |		
+		|				   |
+		|__________________|
+	   `
+	case 6:
+		draw =
+			`
+		  
+		         
+		        
+		  |		
+		__|___
+		|	|______________	
+		|				   |		
+		|				   |
+		|__________________|
+	   `
+	case 7:
+		draw =
+			`
+		         
+		  		  
+		         
+		         
+		  		
+		__ ___
+		|	|______________	
+		|				   |		
+		|				   |
+		|__________________|
+	   `
+	case 8:
+		draw =
+			`
+
+	   `
+
+	}
+	fmt.Println(draw)
+}
+
+func drawStat(g *Game, guess string) {
+	fmt.Print("Guessed : ")
+	drawLetter(g.FoundLetters)
+	fmt.Print("Used : ")
+	drawLetter(g.UsedLetters)
+
+	switch g.State {
+	case "GG":
+		fmt.Println("Good Guess ! ")
+	case "AG":
+		fmt.Println("Letter %s was already used !", guess)
+	case "BG":
+		fmt.Println("Wrong !")
+	case "L":
+		fmt.Println(" GAME OVER :( - the word was : ")
+		drawLetter(g.Letters)
+	case "W":
+		fmt.Println("WIN :) - the word was : ")
+		drawLetter(g.Letters)
+
+	}
+}
+func drawLetter(l []string) {
+	for _, c := range l {
+		fmt.Printf("%v ", c)
+	}
+	fmt.Println()
+}

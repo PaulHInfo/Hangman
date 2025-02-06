@@ -19,11 +19,56 @@ func New(turn int, word string) *Game {
 	}
 
 	g := &Game{
-		State:        "",
+		State:        " ",
 		Letters:      letter,
 		FoundLetters: found,
 		UsedLetters:  []string{},
 		TurnLeft:     turn,
 	}
 	return g
+}
+
+func (g *Game) MakeAGuess(guess string) {
+	guess = strings.ToUpper(guess)
+	if letterInWord(guess, g.UsedLetters) {
+		g.State = "AG"
+	} else if letterInWord(guess, g.Letters) {
+		g.State = "GG"
+		g.RevealLetter(guess)
+		if hasWon(g.Letters, g.FoundLetters) {
+			g.State = "W"
+		}
+	} else {
+		g.State = "BG"
+		g.TurnLeft = g.TurnLeft - 1
+		if g.TurnLeft <= 0 {
+		}
+
+	}
+
+}
+func letterInWord(guess string, letters []string) bool {
+	for _, l := range letters {
+		if l == guess {
+			return true
+		}
+	}
+	return false
+}
+func (g *Game) RevealLetter(guess string) {
+	g.UsedLetters = append(g.UsedLetters, guess)
+	for i, l := range g.Letters {
+		if l == guess {
+			g.FoundLetters[i] = guess
+		}
+	}
+
+}
+func hasWon(letters []string, foundLetters []string) bool {
+	for i := range letters {
+		if letters[i] != foundLetters[i] {
+			return false
+		}
+	}
+	return true
 }
