@@ -2,12 +2,22 @@ package main
 
 import (
 	"fmt"
+	"hangman/dictionnary"
 	"hangman/hangman"
 	"os"
 )
 
 func main() {
-	g := hangman.New(8, "Sison")
+
+	err := dictionnary.Load("data/dico.txt")
+
+	if err != nil {
+		fmt.Printf("%v\n", err)
+		os.Exit(1)
+	}
+	w := dictionnary.PickWord()
+	fmt.Println()
+	g := hangman.New(8, w)
 	hangman.DrawWelcom()
 	guess := ""
 	for {
